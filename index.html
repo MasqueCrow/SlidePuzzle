@@ -27,5 +27,15 @@
 </body>
 	<script>
 		const board = document.getElementById("board");
+
+		let imgArr = ["1", "3", "2", "5", "7", "9", "4", "6", "8"];
+
+		for(let i = 0; i < imgArr.length; i++){
+			var tile = document.createElement('img');
+			tile.id = i;
+			tile.src = "img/" + imgArr[i] + ".jpg";
+			board.appendChild(tile);
+		}
+
 	</script>
 </html>
