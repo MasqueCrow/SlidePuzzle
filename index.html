@@ -31,14 +31,64 @@
 		let rows = 3;
 		let cols = 3;
 
+		function getFileName(src) {
+			let res = src.split("/").at(-1).split(".");
+			return res.at(-2);
+		}
+
+		function swap(node1, node2) {
+			//swap image
+			let tmp = node1.src;
+			node1.src = node2.src;
+			node2.src = tmp;
+		}
+
+		function moveTile() {
+			let nodeId = this.id.split("-");
+			let nodeRow = nodeId[0];
+			let nodeCol = nodeId[1];
+
+			//calculate adjacent tile coordinate id
+			let topNodeId = (parseInt(nodeRow) - 1) + "-" + nodeCol;
+			let btmNodeId = (parseInt(nodeRow) + 1) + "-" + nodeCol;
+			let leftNodeId = nodeRow + "-" + (parseInt(nodeCol) - 1);
+			let rightNodeId = nodeRow + "-" + (parseInt(nodeCol) + 1);
+
+			let topNode = document.getElementById(topNodeId);
+			let btmNode = document.getElementById(btmNodeId);
+			let leftNode = document.getElementById(leftNodeId);
+			let rightNode = document.getElementById(rightNodeId);
+			
+			if(topNode != null && getFileName(topNode.src) == "3") {
+				swap(this, topNode);
+			}
+			else if(btmNode != null && getFileName(btmNode.src) == "3") {
+				swap(this, btmNode);
+			}
+			else if(leftNode != null && getFileName(leftNode.src) == "3") {
+				swap(this, leftNode);
+			}
+			else if(rightNode != null && getFileName(rightNode.src) == "3") {
+				swap(this, rightNode);
+			}
+
+			//Extract current node's row and col from id (done)
+			//Calculate coordinate of adjacent tile (done)
+			//todo:
+			//Get the node using getElementById and perform swap if tile == 3 
+			//Identify balnk tile by extracting tileName
+		}
+
+		var arrIdx = 0;
 		for(let i = 1; i <= rows; i++) {
 			for(let j = 1; j <= cols; j++) {
 				var tile = document.createElement('img');	
 				//set row and column as coordinate in id with hyphen as seperator
 				tile.id = i + "-" + j;
-				tile.src = "img/" + imgArr[i * j - 1] + ".jpg";
+				tile.src = "img/" + imgArr[arrIdx] + ".jpg";
 				tile.addEventListener('click', moveTile);
 				board.appendChild(tile);
+				arrIdx++;
 			}
 		}
 	</script>
