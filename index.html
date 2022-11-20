@@ -32,11 +32,14 @@
 </body>
 	<script>
 		const board = document.getElementById("board");
-
-		let imgArr = ["1", "3", "2", "5", "7", "9", "4", "6", "8"];
+		let imgArr = [];
 		let rows = 3;
 		let cols = 3;
 
+		//generate a random number between min and max
+		function randomIntFromInterval(min, max) {
+			return Math.floor(Math.random() * (max - min + 1) + min);
+		}
 		function getFileName(src) {
 			let res = src.split("/").at(-1).split(".");
 			return res.at(-2);
@@ -83,6 +86,18 @@
 
 		}
 
+		//generate all random tiles
+		function generateRandomTiles(n) {
+			const uniqueTiles = new Set();
+			while(uniqueTiles.size != n) {
+				uniqueTiles.add(randomIntFromInterval(1,n));
+
+			}
+			imgArr = Array.from(uniqueTiles);
+		}
+
+		generateRandomTiles(9);
+		
 		var arrIdx = 0;
 		for(let i = 1; i <= rows; i++) {
 			for(let j = 1; j <= cols; j++) {
