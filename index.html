@@ -36,7 +36,7 @@
 		display: inline-block;
 		font-size: 16px;
 		margin-top: 3%;
-		margin-left: 59%;
+		margin-left: 58%;
 		cursor: pointer;
 		background-color: #4CAF50;
 
@@ -45,12 +45,9 @@
 
 <body>
 	<div id="board"></div>
-	<button class="reset-btn" id="reset" onclick="shuffleTiles()">Reset</button>
+	<button class="reset-btn" id="reset" onclick="shuffleTiles()">shuffle</button>
 </body>
 	<script>
-		function test(n) {
-			alert("hello world" + n);
-		}
 		const board = document.getElementById("board");
 		let imgArr = [];
 		let rows = 3;
