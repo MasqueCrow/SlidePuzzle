@@ -25,16 +25,37 @@
 		padding-right:1px;
 	}
 
+	.reset-btn {
+		border: none;
+		border-radius: 8px;
+		color: white;
+		width: 90px;
+		height: 50px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin-top: 3%;
+		margin-left: 59%;
+		cursor: pointer;
+		background-color: #4CAF50;
+
+	}
 </style>
 
 <body>
 	<div id="board"></div>
+	<button class="reset-btn" id="reset" onclick="shuffleTiles()">Reset</button>
 </body>
 	<script>
+		function test(n) {
+			alert("hello world" + n);
+		}
 		const board = document.getElementById("board");
 		let imgArr = [];
 		let rows = 3;
 		let cols = 3;
+		let move = 0
 
 		const completeBoard = new Map([
 			["1-1", 1],
@@ -62,6 +83,7 @@
 			let tmp = node1.src;
 			node1.src = node2.src;
 			node2.src = tmp;
+			move += 1;
 		}
 
 		//store coordinates and image names to track tile positions
@@ -145,19 +167,37 @@
 			// imgArr = ["1","2","3","4","5","6","7","8","9"];
 		}
 
-		generateRandomTiles(9);
+		function displayTiles() {
+			var arrIdx = 0;
+			for(let i = 1; i <= rows; i++) {
+				for(let j = 1; j <= cols; j++) {
+					var tile = document.createElement('img');
+					//set row and column as coordinate in id with hyphen as seperator
+					tile.id = i + "-" + j;
+					tile.src = "img/" + imgArr[arrIdx] + ".jpg";
+					tile.addEventListener('click', moveTile);
+					board.appendChild(tile);
+					arrIdx++;
+				} //for
+			} //for
+		} //displayTiles
 
-		var arrIdx = 0;
-		for(let i = 1; i <= rows; i++) {
-			for(let j = 1; j <= cols; j++) {
-				var tile = document.createElement('img');	
-				//set row and column as coordinate in id with hyphen as seperator
-				tile.id = i + "-" + j;
-				tile.src = "img/" + imgArr[arrIdx] + ".jpg";
-				tile.addEventListener('click', moveTile);
-				board.appendChild(tile);
-				arrIdx++;
+		function clearBoard() {
+			const parent = document.getElementById("board");
+			while (parent.firstChild) {
+				parent.firstChild.remove();
 			}
 		}
+
+		function shuffleTiles() {
+			clearBoard();
+			generateRandomTiles(9);
+			displayTiles();
+		}
+
+		generateRandomTiles(9);
+		displayTiles();
+
+
 	</script>
 </html>
