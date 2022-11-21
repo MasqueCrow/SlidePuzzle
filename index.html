@@ -24,8 +24,17 @@
 		padding-left:1px;
 		padding-right:1px;
 	}
+	.btn-container {
+		width: 366px;
+		height: 200px;
+		padding-top:3%;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -3%;
+	}
 
-	.reset-btn {
+	.btn {
+		margin-top: 5%;
 		border: none;
 		border-radius: 8px;
 		color: white;
@@ -35,17 +44,49 @@
 		text-decoration: none;
 		display: inline-block;
 		font-size: 16px;
-		margin-top: 3%;
-		margin-left: 58%;
 		cursor: pointer;
-		background-color: #4CAF50;
+	}
 
+	.level-btn {
+		background-color: #007bff;
+		border-color: #007bff;
+		margin-right: 0.3%;
+	}
+
+	.reset-btn {
+		background-color: #4CAF50;
+		border-color: #4CAF50;
+		margin-right: 0.3%;
+	}
+
+	.custom-btn {
+		background-color: #fbbd04;
+		border-color: #fbbd04;
 	}
 </style>
 
 <body>
 	<div id="board"></div>
-	<button class="reset-btn" id="reset" onclick="shuffleTiles()">shuffle</button>
+	<div class="btn-container">
+		<!-- diffculty drop-down menu -->
+		<select class="btn level-btn">
+			<option value="easy" selected>easy</option>
+			<option value="medium">medium</option>
+			<option value="hard">hard</option>
+		</select>
+
+		<!-- custom shuffle -->
+		<select class="btn custom-btn">
+			<option selected > custom </option>
+			<option value="X" >X</option>
+			<option value="Y">Y</option>
+			<option value="Z">Z</option>
+		</select>
+
+		<!-- shuffle button -->
+		<button class="btn reset-btn" id="reset" onclick="shuffleTiles()">shuffle</button>
+		<!-- <input class="" type="text" placeholder="custom"> -->
+	</div>
 </body>
 	<script>
 		const board = document.getElementById("board");
