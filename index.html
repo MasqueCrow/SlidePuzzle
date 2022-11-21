@@ -7,23 +7,43 @@
 </head>
 
 <style type="text/css">
-	#board{
+	.banner-container {
+		width:450px;
+		height:200px;
+		margin-left: auto;
+		margin-right: auto;
+		display: flex;
+	}
+	#banner {
+		width: 83%;
+		margin-left: 8%;
+	}
+	
+	#mushroom {
+		margin-top: 32%;
+		margin-left: -9%;
+		z-index: -1;
+	}
+
+	#board {
 		width: 366px;
 		height: 366px;
 		border: 3px solid black;
 		background-color: lightblue;
+		margin-top: 0.5%;
 		margin-left: auto;
 		margin-right: auto;
-		margin-top: 10%;
 		display: flex;
 		flex-wrap: wrap;
 	}
-	img {
+
+	.tile {
 		width:120px;
 		height:120px;
 		padding-left:1px;
 		padding-right:1px;
 	}
+
 	.btn-container {
 		width: 366px;
 		height: 200px;
@@ -66,6 +86,11 @@
 </style>
 
 <body>
+	<!-- banner -->
+	<div class="banner-container">
+		<img src="img/banner.png" id="banner" />
+		<img src ="img/animate_mushroom.gif" id="mushroom" />
+	</div>
 	<div id="board"></div>
 	<div class="btn-container">
 		<!-- diffculty drop-down menu -->
@@ -212,6 +237,7 @@
 					var tile = document.createElement('img');
 					//set row and column as coordinate in id with hyphen as seperator
 					tile.id = i + "-" + j;
+					tile.className = "tile";
 					tile.src = "img/" + imgArr[arrIdx] + ".jpg";
 					tile.addEventListener('click', moveTile);
 					board.appendChild(tile);
