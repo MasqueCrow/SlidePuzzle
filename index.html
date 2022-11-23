@@ -36,6 +36,18 @@
 		display: flex;
 		flex-wrap: wrap;
 	}
+	
+	.timer-container {
+		width:450px;
+		margin-left: auto;
+		margin-right: auto;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size:20px;
+	}
+	
+	#timer {
+		margin-left: 43%;
+	}
 
 	.tile {
 		width:120px;
@@ -97,6 +109,12 @@
 		<img src="img/banner.png" id="banner" />
 		<img src ="img/animate_mushroom.gif" id="mushroom" />
 	</div>
+
+	<!-- timer -->
+	<div class="timer-container">
+		<span id="timer">00:10</span>s
+	</div>
+
 	<div id="board"></div>
 	<div class="btn-container">
 		<!-- start button-->
@@ -268,9 +286,32 @@
 			displayTiles();
 		}
 
+		function startCountdown() {
+			let timer = document.getElementById("timer").innerText.split(":")[1];
+			let countdown = parseInt(timer);
+
+			// update the count down every one second
+			const startInterval = setInterval(function() {
+				//displays countdown on page
+				countdown--; 
+				document.getElementById("timer").innerText = "00:0" + countdown;
+				
+				//stop timer after it reaches 0 and shuffle tiles
+				if(countdown == 0) {
+					clearInterval(startInterval);
+					clearBoard();
+					shuffleTiles();
+				} 
+
+			},1000);
+		}
+
 		function main() {
-			//generateRandomTiles(9);
+			//display initial complete tiles
 			displayTiles();
+			//start the count down and when it is finished, shuffle tiles
+			startCountdown();
+
 		}
 		
 		main();
