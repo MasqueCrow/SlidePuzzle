@@ -45,7 +45,7 @@
 	}
 
 	.btn-container {
-		width: 366px;
+		width: 378px;
 		height: 200px;
 		padding-top:3%;
 		margin-left: auto;
@@ -83,6 +83,12 @@
 		background-color: #fbbd04;
 		border-color: #fbbd04;
 	}
+
+	.start-btn {
+		background-color: #7426ff;
+		border-color: #7426ff;
+		margin-right: 0.3%;
+	}
 </style>
 
 <body>
@@ -93,6 +99,9 @@
 	</div>
 	<div id="board"></div>
 	<div class="btn-container">
+		<!-- start button-->
+		<button class="btn start-btn">start</button>
+
 		<!-- diffculty drop-down menu -->
 		<select class="btn level-btn">
 			<option value="easy" selected>easy</option>
@@ -115,7 +124,7 @@
 </body>
 	<script>
 		const board = document.getElementById("board");
-		let imgArr = [];
+		let imgArr = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]; //display initial sequence
 		let rows = 3;
 		let cols = 3;
 		let move = 0
@@ -260,7 +269,7 @@
 		}
 
 		function main() {
-			generateRandomTiles(9);
+			//generateRandomTiles(9);
 			displayTiles();
 		}
 		
