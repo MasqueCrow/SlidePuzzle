@@ -220,21 +220,16 @@
 			let leftNode = document.getElementById(leftNodeId);
 			let rightNode = document.getElementById(rightNodeId);
 			
-			if(topNode != null && getFileName(topNode.src) == "9") {
-				swap(this, topNode);
+			function checkAndSwapEmptyTile(currentNode ,positionNode, emptyImgName) {
+				if(positionNode != null && getFileName(positionNode.src) == emptyImgName) {
+					swap(currentNode, positionNode);
+				}
 			}
-			else if(btmNode != null && getFileName(btmNode.src) == "9") {
-				swap(this, btmNode);
-			}
-			else if(leftNode != null && getFileName(leftNode.src) == "9") {
-				swap(this, leftNode);
-			}
-			else if(rightNode != null && getFileName(rightNode.src) == "9") {
-				swap(this, rightNode);
-			}
-			else {
-				console.log("empty tile not found");
-			}
+
+			checkAndSwapEmptyTile(this, topNode, "9");
+			checkAndSwapEmptyTile(this, btmNode, "9");
+			checkAndSwapEmptyTile(this, leftNode, "9");
+			checkAndSwapEmptyTile(this, rightNode, "9");
 
 			let currentBoard = getCurrentBoard();
 			let result  = isBoardSolved(currentBoard, completeBoard);
