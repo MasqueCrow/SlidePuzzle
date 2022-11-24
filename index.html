@@ -112,13 +112,13 @@
 
 	<!-- timer -->
 	<div class="timer-container">
-		<span id="timer">00:10</span>s
+		<span id="timer">00:00:10</span>
 	</div>
 
 	<div id="board"></div>
 	<div class="btn-container">
 		<!-- start button-->
-		<button class="btn start-btn">start</button>
+		<button class="btn start-btn" onclick="startTimer()">start</button>
 
 		<!-- diffculty drop-down menu -->
 		<select class="btn level-btn">
@@ -146,6 +146,7 @@
 		let rows = 3;
 		let cols = 3;
 		let move = 0
+		let startInterval = null;
 
 		const completeBoard = new Map([
 			["1-1", 1],
@@ -287,23 +288,79 @@
 		}
 
 		function startCountdown() {
-			let timer = document.getElementById("timer").innerText.split(":")[1];
+			let timer = document.getElementById("timer").innerText.split(":")[2];
 			let countdown = parseInt(timer);
 
 			// update the count down every one second
-			const startInterval = setInterval(function() {
+			startInterval = setInterval(function() {
 				//displays countdown on page
 				countdown--; 
-				document.getElementById("timer").innerText = "00:0" + countdown;
+				document.getElementById("timer").innerText = "00:00:0" + countdown;
 				
 				//stop timer after it reaches 0 and shuffle tiles
 				if(countdown == 0) {
-					clearInterval(startInterval);
 					clearBoard();
 					shuffleTiles();
+					startTimer();
 				} 
 
 			},1000);
+		}
+
+		function startTimer() {
+			//set countdown displayed
+			document.getElementById("timer").innerText = "00:00:00";
+			//clear countdown
+			clearInterval(startInterval);
+			
+			let startTimer = setInterval(updateTime, 1000);
+			let second = 0, minute = 0, hour = 0;
+			let dis_sec = 0 , dis_min = 0, dis_hr = 0;
+
+			function updateTime() {
+				second += 1;
+				
+				if(second == 60) {
+					minute += 1;
+					second = 0; 
+				}
+
+				if(minute == 60) {
+					hour += 1;
+					minute = 0;
+				}
+
+				//reset to 00:00:00 and stop timer
+				if(hour == 24) {
+					document.getElementById("timer").innerText = "00:00:00";
+					clearInterval(startTimer);
+				}
+
+				//add padded zero
+				if(second < 10) {
+					dis_sec = "0" + second;
+				}
+				else {
+					dis_sec = second;
+				}
+
+				if(minute < 10) {
+					dis_min = "0" + minute;
+				}
+				else {
+					dis_min = minute;
+				}
+
+				if(hour < 10) {
+					dis_hr = "0" + hour;
+				}
+				else {
+					hour = hour;
+				}
+
+				document.getElementById("timer").innerText = dis_hr + ":" + dis_min + ":" + dis_sec;
+			} //updateTime
+
 		}
 
 		function main() {
