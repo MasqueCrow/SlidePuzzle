@@ -145,9 +145,8 @@
 		let imgArr = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]; //display initial sequence
 		let rows = 3;
 		let cols = 3;
-		let move = 0
-		let startInterval = null;
-
+		let move = 0;
+		
 		const completeBoard = new Map([
 			["1-1", 1],
 			["1-2", 2],
@@ -287,35 +286,35 @@
 			displayTiles();
 		}
 
-		function startCountdown() {
+		//countdown for user to memorise complete image
+		function startCountdown(callback) {
 			let timer = document.getElementById("timer").innerText.split(":")[2];
-			let countdown = parseInt(timer);
+			let countdown;
+			let startInterval;
 
-			// update the count down every one second
-			startInterval = setInterval(function() {
+			//perform casting to retrieve seconds in integer
+			countdown = parseInt(timer);	
+
+			startInterval = setInterval(function() { 
 				//displays countdown on page
 				countdown--; 
 				document.getElementById("timer").innerText = "00:00:0" + countdown;
-				
-				//stop timer after it reaches 0 and shuffle tiles
-				if(countdown == 0) {
-					clearBoard();
-					shuffleTiles();
-					startTimer();
-				} 
 
-			},1000);
-		}
+				if(countdown == 0) {
+					clearInterval(startInterval);
+					callback();
+				} //if
+			},1000); //setInterval
+			
+		} //startCountdown
 
 		function startTimer() {
-			//set countdown displayed
+			//reset countdown displayed
 			document.getElementById("timer").innerText = "00:00:00";
-			//clear countdown
-			clearInterval(startInterval);
-			
-			let startTimer = setInterval(updateTime, 1000);
+
 			let second = 0, minute = 0, hour = 0;
-			let dis_sec = 0 , dis_min = 0, dis_hr = 0;
+			let dis_sec = 0, dis_min = 0, dis_hr = 0;			
+			let startTimer = setInterval(updateTime, 1000);
 
 			function updateTime() {
 				second += 1;
@@ -336,41 +335,38 @@
 					clearInterval(startTimer);
 				}
 
-				//add padded zero
-				if(second < 10) {
-					dis_sec = "0" + second;
-				}
-				else {
-					dis_sec = second;
-				}
-
-				if(minute < 10) {
-					dis_min = "0" + minute;
-				}
-				else {
-					dis_min = minute;
+				function resolveDoubleDigit(value) {
+					//return padded zero
+					if(value < 10) {
+						return "0" + value;
+					}
+					//otherwise return original value
+					return value;
 				}
 
-				if(hour < 10) {
-					dis_hr = "0" + hour;
-				}
-				else {
-					hour = hour;
-				}
+				dis_sec = resolveDoubleDigit(second);
+				dis_min = resolveDoubleDigit(minute);
+				dis_hr = resolveDoubleDigit(hour);
 
 				document.getElementById("timer").innerText = dis_hr + ":" + dis_min + ":" + dis_sec;
 			} //updateTime
-
-		}
-
+		} //startTimer
+		
 		function main() {
 			//display initial complete tiles
 			displayTiles();
-			//start the count down and when it is finished, shuffle tiles
-			startCountdown();
 
+			//start count down and when it is finish, run callback function
+			startCountdown(function() {
+					clearBoard();
+					shuffleTiles();
+					startTimer();
+					//disable start button once game has started
+					document.getElementsByClassName("start-btn")[0].disabled = true;
+			}); //startCountdown
 		}
 		
+		//main function runs regardless of event trigger, e.g. onclick event
 		main();
 
 
