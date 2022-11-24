@@ -118,7 +118,7 @@
 	<div id="board"></div>
 	<div class="btn-container">
 		<!-- start button-->
-		<button class="btn start-btn" onclick="startTimer()">start</button>
+		<button class="btn start-btn">start</button>
 
 		<!-- diffculty drop-down menu -->
 		<select class="btn level-btn">
@@ -146,6 +146,7 @@
 		let rows = 3;
 		let cols = 3;
 		let move = 0;
+		let startBtn = document.getElementsByClassName("start-btn")[0];
 		
 		const completeBoard = new Map([
 			["1-1", 1],
@@ -362,8 +363,17 @@
 					shuffleTiles();
 					startTimer();
 					//disable start button once game has started
-					document.getElementsByClassName("start-btn")[0].disabled = true;
+					startBtn.disabled = true;
 			}); //startCountdown
+			
+			//start game immediately when user does not wait for countdown to complete
+			startBtn.addEventListener("click", function(){
+				clearBoard();
+				startTimer();
+				shuffleTiles();
+				//disable start button once game has started
+				startBtn.disabled = true;
+			}); //startBtn	
 		}
 		
 		//main function runs regardless of event trigger, e.g. onclick event
