@@ -237,7 +237,7 @@
 			}
 
 			let currentBoard = getCurrentBoard();
-			var result  = isBoardSolved(currentBoard, completeBoard);
+			let result  = isBoardSolved(currentBoard, completeBoard);
 
 			if(result) {
 				alert("Congrats you have solved the puzzle!");
@@ -259,10 +259,10 @@
 		}
 
 		function displayTiles() {
-			var arrIdx = 0;
+			let arrIdx = 0;
 			for(let i = 1; i <= rows; i++) {
 				for(let j = 1; j <= cols; j++) {
-					var tile = document.createElement('img');
+					let tile = document.createElement('img');
 					//set row and column as coordinate in id with hyphen as seperator
 					tile.id = i + "-" + j;
 					tile.className = "tile";
