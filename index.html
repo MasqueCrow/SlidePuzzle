@@ -158,6 +158,7 @@
 				["3-2", 8],
 				["3-3", 9]
 			]),
+			emptyTile: "9",
 			initSeq: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
 			//css properties
 			board_width: "366px",
@@ -201,6 +202,7 @@
 				["5-4", 24],
 				["5-5", 25],
 			]),
+			emptyTile: "25",
 			initSeq: [
 					  "1", "2", "3", "4", "5", "6", "7", "8", "9",
 					  "10", "11", "12", "13", "14", "15", "16", 
@@ -306,10 +308,10 @@
 				}
 			}
 
-			checkAndSwapEmptyTile(selectedTile, topNode, "9");
-			checkAndSwapEmptyTile(selectedTile, btmNode, "9");
-			checkAndSwapEmptyTile(selectedTile, leftNode, "9");
-			checkAndSwapEmptyTile(selectedTile, rightNode, "9");
+			checkAndSwapEmptyTile(selectedTile, topNode, mode.emptyTile);
+			checkAndSwapEmptyTile(selectedTile, btmNode, mode.emptyTile);
+			checkAndSwapEmptyTile(selectedTile, leftNode, mode.emptyTile);
+			checkAndSwapEmptyTile(selectedTile, rightNode, mode.emptyTile);
 
 			let currentBoard = getCurrentBoard();
 			let result  = isBoardSolved(currentBoard, mode.completeBoard);
