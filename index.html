@@ -259,7 +259,7 @@
 
 		//store coordinates and image names to track tile positions
 		function getCurrentBoard() {
-			const nodeList = document.getElementsByTagName("img");
+			const nodeList = document.getElementsByClassName("tile");
 			let currentBoard = new Map([]);
 
 			for(let i = 0; i < nodeList.length; i++) {
@@ -284,8 +284,8 @@
 			return boardSolved;
 		}
 
-		function moveTile() {
-			let nodeId = this.id.split("-");
+		function moveTile(selectedTile, mode) {
+			let nodeId = selectedTile.id.split("-");
 			let nodeRow = nodeId[0];
 			let nodeCol = nodeId[1];
 
@@ -306,13 +306,13 @@
 				}
 			}
 
-			checkAndSwapEmptyTile(this, topNode, "9");
-			checkAndSwapEmptyTile(this, btmNode, "9");
-			checkAndSwapEmptyTile(this, leftNode, "9");
-			checkAndSwapEmptyTile(this, rightNode, "9");
+			checkAndSwapEmptyTile(selectedTile, topNode, "9");
+			checkAndSwapEmptyTile(selectedTile, btmNode, "9");
+			checkAndSwapEmptyTile(selectedTile, leftNode, "9");
+			checkAndSwapEmptyTile(selectedTile, rightNode, "9");
 
 			let currentBoard = getCurrentBoard();
-			let result  = isBoardSolved(currentBoard, completeBoard);
+			let result  = isBoardSolved(currentBoard, mode.completeBoard);
 
 			if(result) {
 				alert("Congrats you have solved the puzzle!");
@@ -320,7 +320,7 @@
 			else{
 				console.log("not solved");
 			}
-		}
+		} //moveTile
 
 		//generate all random tiles
 		function generateRandomTiles(n) {
@@ -342,7 +342,9 @@
 					tile.id = i + "-" + j;
 					tile.className = "tile";
 					tile.src = mode.imgPath + imgArr[arrIdx] + ".jpg";
-					tile.addEventListener('click', moveTile);
+					tile.addEventListener('click', function() {
+						moveTile(tile, mode);
+					});
 					board.appendChild(tile);
 					arrIdx++;
 				} //for
@@ -479,8 +481,11 @@
 				imgArr = easy_mode.initSeq;
 
 				clearBoard(); //clear tiles from previous board setting
-				displayTiles(easy_mode); 
-				//todo: fix easy mode issue bug, medium switch to easy
+				displayTiles(easy_mode);
+				resetTimer(countdown);
+				startCountdown(function() {
+					startTimer();
+				});
 			}
 
 			if (mode == "medium") {
