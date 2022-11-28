@@ -140,25 +140,46 @@
 		<!-- <input class="" type="text" placeholder="custom"> -->
 	</div>
 </body>
-	<script>
+	<script>		
+		const easy_mode = {
+			rows: 3,
+			cols: 3,
+			maxRandomTile: 9,
+			imgPath: "./img/bluesnail/",
+			completeBoard: new Map ([
+				["1-1", 1],
+				["1-2", 2],
+				["1-3", 3],
+				["2-1", 4],
+				["2-2", 5],
+				["2-3", 6],
+				["3-1", 7],
+				["3-2", 8],
+				["3-3", 9]
+			]),
+			initSeq: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+		}
+
+		//initial mode set to easy
 		const board = document.getElementById("board");
-		let imgArr = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]; //display initial sequence
-		let rows = 3;
-		let cols = 3;
+		let imgArr = easy_mode.initSeq; //display initial sequence
+		let rows = easy_mode.rows;
+		let cols = easy_mode.cols;
+		let maxRandomTile = easy_mode.maxRandomTile;
 		let move = 0;
 		let startBtn = document.getElementsByClassName("start-btn")[0];
-		
-		const completeBoard = new Map([
-			["1-1", 1],
-			["1-2", 2],
-			["1-3", 3],
-			["2-1", 4],
-			["2-2", 5],
-			["2-3", 6],
-			["3-1", 7],
-			["3-2", 8],
-			["3-3", 9]
-		]);
+
+		// const completeBoard = new Map([
+		// 	["1-1", 1],
+		// 	["1-2", 2],
+		// 	["1-3", 3],
+		// 	["2-1", 4],
+		// 	["2-2", 5],
+		// 	["2-3", 6],
+		// 	["3-1", 7],
+		// 	["3-2", 8],
+		// 	["3-3", 9]
+		// ]);
 
 		//generate a random number between min and max
 		function randomIntFromInterval(min, max) {
@@ -261,7 +282,8 @@
 					//set row and column as coordinate in id with hyphen as seperator
 					tile.id = i + "-" + j;
 					tile.className = "tile";
-					tile.src = "img/" + imgArr[arrIdx] + ".jpg";
+					// tile.src = "img/" + imgArr[arrIdx] + ".jpg";
+					tile.src = easy_mode.imgPath + imgArr[arrIdx] + ".jpg";
 					tile.addEventListener('click', moveTile);
 					board.appendChild(tile);
 					arrIdx++;
@@ -276,9 +298,9 @@
 			}
 		}
 
-		function shuffleTiles() {
+		function shuffleTiles(maxRandomTile) {
 			clearBoard();
-			generateRandomTiles(9);
+			generateRandomTiles(maxRandomTile);
 			displayTiles();
 		}
 
@@ -355,7 +377,7 @@
 			//start count down and when it is finish, run callback function
 			startCountdown(function() {
 					clearBoard();
-					shuffleTiles();
+					shuffleTiles(maxRandomTile);
 					startTimer();
 					//disable start button once game has started
 					startBtn.disabled = true;
@@ -365,10 +387,10 @@
 			startBtn.addEventListener("click", function(){
 				clearBoard();
 				startTimer();
-				shuffleTiles();
+				shuffleTiles(maxRandomTile);
 				//disable start button once game has started
 				startBtn.disabled = true;
-			}); //startBtn	
+			}); //startBtn
 		}
 		
 		//main function runs regardless of event trigger, e.g. onclick event
