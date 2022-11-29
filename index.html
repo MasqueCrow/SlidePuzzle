@@ -101,6 +101,8 @@
 		border-color: #7426ff;
 		margin-right: 0.3%;
 	}
+
+
 </style>
 
 <body>
@@ -118,7 +120,7 @@
 	<div id="board"></div>
 	<div class="btn-container">
 		<!-- start button-->
-		<button class="btn start-btn">start</button>
+		<button id="start" class="btn start-btn">start</button>
 
 		<!-- diffculty drop-down menu -->
 		<select id="modeDropdown" class="btn level-btn" onmousedown="this.value= '';" onchange="gameMode(this.value);">
@@ -226,9 +228,11 @@
 		let cols = easy_mode.cols;
 		let maxRandomTile = easy_mode.maxRandomTile;
 		let move = 0;
-		let startBtn = document.getElementsByClassName("start-btn")[0];
+		let startBtn = document.getElementById("start");
 		let countdown = null;
 		let modeDropdown = document.getElementById("modeDropdown");
+		let mode = null; //store value from game difficulty dropdown menu
+		let userTiming = null;
 
 		//generate a random number between min and max
 		function randomIntFromInterval(min, max) {
@@ -380,7 +384,7 @@
 
 			let second = 0, minute = 0, hour = 0;
 			let dis_sec = 0, dis_min = 0, dis_hr = 0;			
-			let userTiming = setInterval(updateTime, 1000);
+			userTiming = setInterval(updateTime, 1000);
 
 			function updateTime() {
 				second += 1;
@@ -418,8 +422,8 @@
 			} //updateTime
 		} //startTimer
 		
-		function resetTimer(countdown) {
-			clearInterval(countdown);
+		function resetTimer(myTimer) {
+			clearInterval(myTimer);
 			document.getElementById("timer").innerText = "00:00:10";
 		}
 
@@ -429,8 +433,9 @@
 
 			//start count down and when it is finish, run callback function
 			startCountdown(function() {
-					shuffleTiles(maxRandomTile, easy_mode);
+					shuffleTiles(easy_mode.maxRandomTile, easy_mode);
 					startTimer();
+					
 					//disable start button once game has started
 					startBtn.disabled = true;
 			}); //startCountdown
@@ -438,28 +443,38 @@
 			//start game immediately when user does not wait for countdown to complete
 			startBtn.addEventListener("click", function(){
 				//get selected difficulty level
-				let mode = modeDropdown.options[modeDropdown.selectedIndex].value;
+				mode = modeDropdown.options[modeDropdown.selectedIndex].value;
 				
-				clearBoard();
+				//reset timer
+				resetTimer(countdown);
+				resetTimer(userTiming);
 				startTimer();
+				clearBoard();
 				
 				if(mode == "easy") {
-					shuffleTiles(maxRandomTile, easy_mode);
-				}
-				else if(mode == "medium") {
-					shuffleTiles(maxRandomTile, medium_mode);
+					shuffleTiles(easy_mode.maxRandomTile, easy_mode);
 				}
 
+				if(mode == "medium") {
+					shuffleTiles(medium_mode.maxRandomTile, medium_mode);
+					
+				}
 
 				//disable start button once game has started
 				startBtn.disabled = true;
 			}); //startBtn
-		}
-		
-		//main function runs regardless of event trigger, e.g. onclick event
-		main();
 
+		} //main
+		
+		// trigger by game difficulty dropdown menu
 		function gameMode(mode) {
+			//reset timer
+			resetTimer(countdown);
+			resetTimer(userTiming);
+
+			//clear tiles from previous board setting
+			clearBoard();
+
 			if (mode == "easy") {
 				//change board css property
 				board.style.width = easy_mode.board_width;
@@ -469,11 +484,10 @@
 				maxRandomTile = easy_mode.maxRandomTile;
 				imgArr = easy_mode.initSeq;
 
-				clearBoard(); //clear tiles from previous board setting
 				displayTiles(easy_mode);
-				resetTimer(countdown);
 				startCountdown(function() {
 					startTimer();
+					shuffleTiles(easy_mode.maxRandomTile, easy_mode);
 				});
 			}
 
@@ -486,16 +500,16 @@
 				maxRandomTile = medium_mode.maxRandomTile;
 				imgArr = medium_mode.initSeq;
 				
-				clearBoard(); //clear tiles from previous board setting
 				displayTiles(medium_mode);
-				resetTimer(countdown);
 				startCountdown(function() {
 					startTimer();
+					shuffleTiles(medium_mode.maxRandomTile, medium_mode);
 				});
-				
-				
 			}
-		}
+		} //gameMode
+
+		//main function runs on default easy mode
+		main();
 
 
 	</script>
