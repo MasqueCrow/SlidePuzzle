@@ -136,7 +136,7 @@
 		</select>
 
 		<!-- custom shuffle -->
-		<select class="btn custom-btn">
+		<select id="customDropdown" class="btn custom-btn">
 			<option selected > custom </option>
 			<option value="X" >X</option>
 			<option value="Y">Y</option>
@@ -175,7 +175,10 @@
 			tile_width: "120px",
 			tile_height: "120px",
 			padding_left: "1px",
-			padding_right: "1px"
+			padding_right: "1px",
+			customTilesX: [1, undefined, 3, undefined, 5, undefined, 7, undefined, 9],
+			customTilesY: [1,undefined, 3, undefined, 5, undefined, undefined, 8, undefined],
+			customTilesZ: [1, 2, 3, undefined, 5, undefined, 7, 8, 9]
 		}
 
 		const medium_mode = {
@@ -237,6 +240,8 @@
 		let startBtn = document.getElementById("start");
 		let countdown = null;
 		let modeDropdown = document.getElementById("modeDropdown");
+		let customDropdown = document.getElementById("customDropdown");
+		let customValue = null;
 		let mode = null; //store value from game difficulty dropdown menu
 		let userTiming = null;
 
@@ -323,13 +328,40 @@
 		} //moveTile
 
 		//generate all random tiles
-		function generateRandomTiles(n) {
-			const uniqueTiles = new Set();
-			while(uniqueTiles.size != n) {
-				uniqueTiles.add(randomIntFromInterval(1,n));
+		function generateRandomTiles(n, customTiles) {
+			let uniqueTiles = customTiles;
+			
+			//user did not select value in custom dropdown
+			if(uniqueTiles === undefined) {
+				uniqueTiles = new Array();
+	
+				while(uniqueTiles.length != n) {
+					let randNum = randomIntFromInterval(1,n);
+					if (!uniqueTiles.includes(randNum)) {
+						uniqueTiles.push(randNum);
+					}
+				} //while				
 
-			}
-			imgArr = Array.from(uniqueTiles);
+			} //if
+			else {
+				//fill sparse array with random value
+				while(uniqueTiles.includes(undefined)) {
+					let randNum = randomIntFromInterval(1,n);
+
+					//checks generated random number value existed in array
+					//before filling sparse array index with random number
+					if(uniqueTiles.includes(randNum) == false) {
+						for(let i = 0; i < uniqueTiles.length; i++) {
+							//fill undefined type with unique random number
+							if(uniqueTiles[i] === undefined) {
+								uniqueTiles[i] = randNum;
+								break;
+							}
+						} //for
+					} //if
+				 } //while
+			} //else
+			imgArr = uniqueTiles;
 		}
 
 		function displayTiles(mode) {
@@ -359,7 +391,20 @@
 
 		function shuffleTiles(maxRandomTile, mode) {
 			clearBoard();
-			generateRandomTiles(maxRandomTile);
+
+			if(customValue == "X") {
+				generateRandomTiles(maxRandomTile, mode.customTilesX);
+			}
+			else if(customValue == "Y") {
+				generateRandomTiles(maxRandomTile, mode.customTilesY);
+			}
+			else if(customValue == "Z") {
+				generateRandomTiles(maxRandomTile, mode.customTilesZ);
+			}
+			else {
+				generateRandomTiles(maxRandomTile);
+			}
+
 			displayTiles(mode);
 		}
 
@@ -434,11 +479,13 @@
 		}
 
 		function main() {
-			// //display initial complete tiles
+			//display initial complete tiles
 			displayTiles(easy_mode);
 
 			//start count down and when it is finish, run callback function
 			startCountdown(function() {
+					//get selected custom dropdown
+					customValue = customDropdown.options[customDropdown.selectedIndex].value;
 					shuffleTiles(easy_mode.maxRandomTile, easy_mode);
 					startTimer();
 					
@@ -448,12 +495,16 @@
 			
 			//start game immediately when user does not wait for countdown to complete
 			startBtn.addEventListener("click", function(){
+				//get selected custom dropdown
+				customValue = customDropdown.options[customDropdown.selectedIndex].value;
+				
 				//get selected difficulty level
 				mode = modeDropdown.options[modeDropdown.selectedIndex].value;
 				
 				//reset timer
 				resetTimer(countdown);
 				resetTimer(userTiming);
+				
 				startTimer();
 				clearBoard();
 				
@@ -474,6 +525,9 @@
 		
 		// trigger by game difficulty dropdown menu
 		function gameMode(mode) {
+			//get selected custom dropdown
+			customValue = customDropdown.options[customDropdown.selectedIndex].value;
+				
 			//reset timer
 			resetTimer(countdown);
 			resetTimer(userTiming);
