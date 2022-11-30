@@ -252,6 +252,33 @@
 						   ]
 		}
 
+		const hard_mode = {
+			rows: 7,
+			cols: 7,
+			maxRandomTile: 49,
+			imgPath: "./img/horntail/",
+			completeBoard: new Map ([]),
+			emptyTile: "49",
+			initSeq: [
+					  "1", "2", "3", "4", "5", "6", "7", "8", "9",
+					  "10", "11", "12", "13", "14", "15", "16", 
+					  "17", "18", "19", "20", "21", "22", "23",
+					  "24", "25", "26", "27", "28", "29", "30",
+					  "31", "32", "33", "34", "35", "36", "37",
+					  "38", "39", "40", "41", "42", "43", "44",
+					  "45", "46", "47", "48", "49"
+					  ],
+
+			//css properties
+			board_width: "854px",
+			board_height: "854px",
+			board_margin_top: "0.5%",
+			tile_width: "120px",
+			tile_height: "12px",
+			padding_left: "1px",
+			padding_right: "1px",
+		}
+
 		/* variable initialization */
 		let board = document.getElementById("board"); //initial mode set to easy
 		let imgArr = easy_mode.initSeq; //display initial sequence
@@ -591,6 +618,23 @@
 					shuffleTiles(medium_mode.maxRandomTile, medium_mode);
 				});
 			}
+
+			if (mode == "hard") {
+				//change board css property
+				board.style.width = hard_mode.board_width;
+				board.style.height = hard_mode.board_height;
+				rows = hard_mode.rows;
+				cols = hard_mode.cols;
+				maxRandomTile = hard_mode.maxRandomTile;
+				imgArr = hard_mode.initSeq;
+				
+				displayTiles(hard_mode);
+				startCountdown(function() {
+					startTimer();
+					shuffleTiles(hard_mode.maxRandomTile, hard_mode);
+				});				
+			}
+
 		} //gameMode
 
 		//main function runs on default easy mode
