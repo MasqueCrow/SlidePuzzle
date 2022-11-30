@@ -176,9 +176,9 @@
 			tile_height: "120px",
 			padding_left: "1px",
 			padding_right: "1px",
-			customTilesX: [1, undefined, 3, undefined, 5, undefined, 7, undefined, 9],
-			customTilesY: [1,undefined, 3, undefined, 5, undefined, undefined, 8, undefined],
-			customTilesZ: [1, 2, 3, undefined, 5, undefined, 7, 8, 9]
+			customTilesX: ["1", undefined, "3", undefined, "5", undefined, "7", undefined, "9"],
+			customTilesY: ["1",undefined, "3", undefined, "5", undefined, undefined, "8", undefined],
+			customTilesZ: ["1", "2", "3", undefined, "5", undefined, "7", "8", "9"]
 		}
 
 		const medium_mode = {
@@ -227,7 +227,29 @@
 			tile_width: "120px",
 			tile_height: "12px",
 			padding_left: "1px",
-			padding_right: "1px"
+			padding_right: "1px",
+			customTilesX: [
+						   "1", undefined, undefined, undefined, "5",
+						   undefined, "7", undefined, "9", undefined,
+						   undefined, undefined, "13", undefined, undefined,
+						   undefined, "17", undefined, "19", undefined,
+						   "21", undefined, undefined, undefined, "25"
+						  ],
+
+			customTilesY: [
+						   "1", undefined, undefined, undefined, "5",
+						   undefined, "7", undefined, "9", undefined,
+						   undefined, undefined, "13", undefined, undefined,
+						   undefined, undefined, "18", undefined, undefined,
+						   undefined, undefined, "23", undefined, undefined
+						   ],
+			customTilesZ: [
+						   "1", "2", "3", "4", "5",
+						   undefined, undefined, undefined, "9", undefined,
+						   undefined, undefined, "13", undefined, undefined,
+						   undefined, "17", undefined, undefined, undefined,
+						   "21", "22", "23", "24", "25"
+						   ]
 		}
 
 		/* variable initialization */
@@ -346,7 +368,7 @@
 			else {
 				//fill sparse array with random value
 				while(uniqueTiles.includes(undefined)) {
-					let randNum = randomIntFromInterval(1,n);
+					let randNum = randomIntFromInterval(1,n).toString();
 
 					//checks generated random number value existed in array
 					//before filling sparse array index with random number
