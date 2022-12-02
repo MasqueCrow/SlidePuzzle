@@ -301,8 +301,7 @@
 			return Math.floor(Math.random() * (max - min + 1) + min);
 		}
 		function getFileName(src) {
-			let res = src.split("/").at(-1).split(".");
-			return res.at(-2);
+			return src.split("/").pop().split(".")[0];
 		}
 
 		function swap(node1, node2) {
@@ -424,14 +423,26 @@
 					tile.id = i + "-" + j;
 					tile.className = "tile";
 					tile.src = mode.imgPath + imgArr[arrIdx] + ".jpg";
-					tile.addEventListener('click', function() {
-						moveTile(tile, mode);
-					});
 					board.appendChild(tile);
 					arrIdx++;
 				} //for
 			} //for
 		} //displayTiles
+
+		//attach eventlistener to each tile and tile swap should trigger when timer has started
+		function addMoveTileAction(mode) {
+			// let n = rows * cols;
+			let tiles = document.getElementsByClassName("tile");
+			
+			for(let i = 0; i < tiles.length; i++) {
+				let tile = tiles[i];
+				tile.addEventListener('click', function() {
+					// console.log(tile.src);
+					moveTile(tile, mode);
+
+					});
+			}
+		}
 
 		function clearBoard() {
 			const parent = document.getElementById("board");
@@ -539,7 +550,8 @@
 					customValue = customDropdown.options[customDropdown.selectedIndex].value;
 					shuffleTiles(easy_mode.maxRandomTile, easy_mode);
 					startTimer();
-					
+					addMoveTileAction(easy_mode);
+
 					//disable start button once game has started
 					startBtn.disabled = true;
 			}); //startCountdown
@@ -561,11 +573,12 @@
 				
 				if(mode == "easy") {
 					shuffleTiles(easy_mode.maxRandomTile, easy_mode);
+					addMoveTileAction(easy_mode);
 				}
 
 				if(mode == "medium") {
 					shuffleTiles(medium_mode.maxRandomTile, medium_mode);
-					
+					addMoveTileAction(medium_mode);
 				}
 
 				//disable start button once game has started
@@ -578,10 +591,12 @@
 
 				if(mode == "easy") {
 					shuffleTiles(easy_mode.maxRandomTile, easy_mode);
+					addMoveTileAction(easy_mode);
 				}
 
 				if(mode == "medium") {
 					shuffleTiles(medium_mode.maxRandomTile, medium_mode);
+					addMoveTileAction(medium_mode);
 
 				}
 			});
@@ -616,6 +631,7 @@
 				startCountdown(function() {
 					startTimer();
 					shuffleTiles(easy_mode.maxRandomTile, easy_mode);
+					addMoveTileAction(easy_mode);
 				});
 			}
 
@@ -632,6 +648,7 @@
 				startCountdown(function() {
 					startTimer();
 					shuffleTiles(medium_mode.maxRandomTile, medium_mode);
+					addMoveTileAction(medium_mode);
 				});
 			}
 
