@@ -145,8 +145,8 @@
 		</select>
 
 		<!-- shuffle button -->
-		<button class="btn reset-btn" id="reset" onclick="shuffleTiles()">shuffle</button>
-		<!-- <input class="" type="text" placeholder="custom"> -->
+		<button class="btn reset-btn" id="reset">shuffle</button>
+		<!-- <input class="" tye="text" placeholder="custom"> -->
 	</div>
 </body>
 	<script>
@@ -288,6 +288,7 @@
 		let maxRandomTile = easy_mode.maxRandomTile;
 		let move = 0;
 		let startBtn = document.getElementById("start");
+		let shuffleBtn = document.getElementById("reset");
 		let countdown = null;
 		let modeDropdown = document.getElementById("modeDropdown");
 		let customDropdown = document.getElementById("customDropdown");
@@ -570,6 +571,20 @@
 				//disable start button once game has started
 				startBtn.disabled = true;
 			}); //startBtn
+
+			shuffleBtn.addEventListener("click", function() {
+				//get selected difficulty level
+				mode = modeDropdown.options[modeDropdown.selectedIndex].value;
+
+				if(mode == "easy") {
+					shuffleTiles(easy_mode.maxRandomTile, easy_mode);
+				}
+
+				if(mode == "medium") {
+					shuffleTiles(medium_mode.maxRandomTile, medium_mode);
+
+				}
+			});
 
 		} //main
 		
