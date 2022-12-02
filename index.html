@@ -23,6 +23,7 @@
 		margin-top: 32%;
 		margin-left: -9%;
 		z-index: -1;
+		width: 11%;
 	}
 
 	#board {
@@ -129,8 +130,8 @@
 		<button id="start" class="btn start-btn">start</button>
 
 		<!-- diffculty drop-down menu -->
-		<select id="modeDropdown" class="btn level-btn" onmousedown="this.value= '';" onchange="gameMode(this.value);">
-			<option value="easy" selected>easy</option>
+		<select id="modeDropdown" class="btn level-btn" onchange="gameMode(this.value);">
+			<option selected value="easy" >easy</option>
 			<option value="medium">medium</option>
 			<option value="hard">hard</option>
 		</select>
