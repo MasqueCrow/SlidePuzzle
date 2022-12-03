@@ -581,6 +581,11 @@
 					addMoveTileAction(medium_mode);
 				}
 
+				if(mode == "hard") {
+					shuffleTiles(hard_mode.maxRandomTile, hard_mode);
+					addMoveTileAction(hard_mode);
+				}
+
 				//disable start button once game has started
 				startBtn.disabled = true;
 			}); //startBtn
@@ -597,9 +602,13 @@
 				if(mode == "medium") {
 					shuffleTiles(medium_mode.maxRandomTile, medium_mode);
 					addMoveTileAction(medium_mode);
-
 				}
-			});
+
+				if(mode == "hard") {
+					shuffleTiles(hard_mode.maxRandomTile, hard_mode);
+					addMoveTileAction(hard_mode);
+				}
+			}); //shuffleBtn
 
 		} //main
 		
