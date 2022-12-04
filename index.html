@@ -146,7 +146,12 @@
 
 		<!-- shuffle button -->
 		<button class="btn reset-btn" id="reset">shuffle</button>
-		<!-- <input class="" tye="text" placeholder="custom"> -->
+
+		<!-- audio control -->
+		<audio id="myAudio" controls>
+  			<source id="bgm" type="audio/mpeg">
+  			Your browser does not support the audio element.
+		</audio>
 	</div>
 </body>
 	<script>
@@ -322,6 +327,8 @@
 		let customValue = null;
 		let mode = null; //store value from game difficulty dropdown menu
 		let userTiming = null;
+		let myAudio = document.getElementById("myAudio");
+		let bgm = document.getElementById("bgm");
 
 		//generate a random number between min and max
 		function randomIntFromInterval(min, max) {
@@ -568,8 +575,16 @@
 		}
 
 		function main() {
+			//hide audio control
+			myAudio.style.visibility = "hidden";
+
 			//display initial complete tiles
 			displayTiles(easy_mode);
+			
+			//set initial audio bgm to henesey for easy mode
+			bgm.src = "./bgm/henesey.mp3";
+			myAudio.load();
+			myAudio.play();
 
 			//start count down and when it is finish, run callback function
 			startCountdown(function() {
@@ -577,6 +592,7 @@
 					customValue = customDropdown.options[customDropdown.selectedIndex].value;
 					shuffleTiles(easy_mode.maxRandomTile, easy_mode);
 					startTimer();
+
 					addMoveTileAction(easy_mode);
 
 					//disable start button once game has started
@@ -637,6 +653,12 @@
 				}
 			}); //shuffleBtn
 
+			//set bgm in audio loop
+			myAudio.addEventListener('ended', function() {
+				this.play();
+			}, false);
+
+
 		} //main
 		
 		// trigger by game difficulty dropdown menu
@@ -662,6 +684,7 @@
 				cols = easy_mode.cols;
 				maxRandomTile = easy_mode.maxRandomTile;
 				imgArr = easy_mode.initSeq;
+				bgm.src = "./bgm/henesey.mp3";
 
 				displayTiles(easy_mode);
 				startCountdown(function() {
@@ -679,6 +702,7 @@
 				cols = medium_mode.cols;
 				maxRandomTile = medium_mode.maxRandomTile;
 				imgArr = medium_mode.initSeq;
+				bgm.src = "./bgm/tot.mp3";
 				
 				displayTiles(medium_mode);
 				startCountdown(function() {
@@ -696,6 +720,7 @@
 				cols = hard_mode.cols;
 				maxRandomTile = hard_mode.maxRandomTile;
 				imgArr = hard_mode.initSeq;
+				bgm.src = "./bgm/horntail.mp3";
 				
 				displayTiles(hard_mode);
 				startCountdown(function() {
@@ -704,6 +729,8 @@
 				});				
 			}
 
+			myAudio.load();
+			myAudio.play();
 		} //gameMode
 
 		//main function runs on default easy mode
