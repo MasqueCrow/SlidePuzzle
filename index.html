@@ -58,7 +58,6 @@
 
 	.btn-container {
 		width: 378px;
-/*		height: 200px;*/
 		padding-top:3%;
 		margin-left: auto;
 		margin-right: auto;
@@ -118,7 +117,7 @@
 		color: #666666;
 	}
 
-	/* modal css */
+	/** modal css **/
 
 	/* hidden modal */
 	.modal {
@@ -459,6 +458,10 @@
 			return boardSolved;
 		}
 
+		//each tile had an id corrdinate with row position + "-" + col position
+		//moveTile attempts to find all adjancet tiles of the current selected tile
+		//if the current tile matches the empty tile, it will perform a swap
+		//and finally checks currentBoard position to see whether board has been solved
 		function moveTile(selectedTile, mode) {
 			let nodeId = selectedTile.id.split("-");
 			let nodeRow = nodeId[0];
@@ -559,7 +562,6 @@
 				tile.addEventListener('click', function() {
 					// console.log(tile.src);
 					moveTile(tile, mode);
-
 					});
 			}
 		}
@@ -670,7 +672,11 @@
 			//set initial audio bgm to henesey for easy mode
 			bgm.src = "./bgm/henesey.mp3";
 			myAudio.load();
-			myAudio.play();
+
+			// Play the audio after user interaction
+  			document.addEventListener('click', function() {
+    		myAudio.play();
+  			});
 
 			//start count down and when it is finish, run callback function
 			startCountdown(function() {
