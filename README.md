@@ -3,7 +3,7 @@ Created a Sliding Puzzle Game with MapleStory Theme
 
 ## Features
   1. Three level of difficulty Easy (3x3), Medium (5x5), Hard (7x7)
-  2. Shuffle tiles and custom alphabet fhuffling (X,Y,Z)
+  2. Shuffle tiles and custom alphabet shuffling (X,Y,Z)
   3. Background music
   4. Preview of completed tile picture
 
