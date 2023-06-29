@@ -6,6 +6,7 @@ Created a Sliding Puzzle Game with MapleStory Theme
   2. Shuffle tiles and custom alphabet shuffling (X,Y,Z)
   3. Background music
   4. Preview of completed tile picture
+  5. Timer
 
 ## Screenshots
 
