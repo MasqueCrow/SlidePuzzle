@@ -16,7 +16,7 @@ While drafting design of this nostalgic game, it was enticing to immediately sou
 ### Be Creative
 When coming up with alphabet shuffling feature to correctly place tiles in alphabetical shape, I simply use an array to store the image name to form the shape. Instead of making a quick dive into coming up with some complicated steps, it is worthwhile to consider whether any characteristics of data structure are available that can be put into good use an alternative solution to solve what seems to be a difficult task
 
-## Code Hygiene
+### Code Hygiene
 While maintaining clean code may initially appear trivial and akin to performing a household chore. However, adhering good practices such as using consistent and meaningful variable names, proper indentation, breaking down tasks into separate functions, and adding thoughtful comments can significantly ease cognitive recall. This is especially helpful when revisiting code, as it helps prevent forgetting what was written. Fostering good coding habits are valuable when collaborating with others on shared codebases
 
 ## Screenshots
